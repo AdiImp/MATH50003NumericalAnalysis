@@ -62,12 +62,12 @@ directly examined in the computer-based or final exam, though they may give good
 
 ## Revision
 
-1. [Revision Lab](https://github.com/Imperial-MATH50003/MATH50003NumericalAnalysis/blob/main/labs/labr.ipynb)
+1. [Revision Lab](https://github.com/Imperial-MATH50003/MATH50003NumericalAnalysis/blob/main/labs/labr.ipynb) ([Solution](https://github.com/Imperial-MATH50003/MATH50003NumericalAnalysis/blob/main/labs/labrs.ipynb))
 2. Revision Sheet
 
 ## Assessment
 
-2. Mock computer-based exam (4 March 2026, 11am)
+2. [Mock computer-based exam](https://github.com/Imperial-MATH50003/MATH50003NumericalAnalysis/blob/main/exams/mockexam.ipynb) ([Solution](https://github.com/Imperial-MATH50003/MATH50003NumericalAnalysis/blob/main/exams/mockexams.ipynb))
 2. Computer-based exam (1 hour, 13 March 2026, 11am)
 5. Final exam (pen-and-paper, 80% of term mark)
 
