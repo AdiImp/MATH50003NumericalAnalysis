@@ -178,6 +178,18 @@ We saw in the notes that discrete convolutions can be diagonalised in terms of t
 \item[2. ] \emph{Associativity}: $(\ensuremath{\bm{\f}} \ensuremath{\star} \ensuremath{\bm{\g}}) \ensuremath{\star} \ensuremath{\bm{\h}} = \ensuremath{\bm{\f}} \ensuremath{\star} (\ensuremath{\bm{\g}} \ensuremath{\star} \ensuremath{\bm{\h}})$.
 
 \end{itemize}
+\textbf{SOLUTION}
+
+It follows directly from the relationship with the DFT and the fact that ${\rm diag}(Q_n \ensuremath{\bm{\f}}) Q_n \ensuremath{\bm{\g}} = {\rm diag}(Q_n \ensuremath{\bm{\g}}) Q_n \ensuremath{\bm{\f}}$:
+\meeq{
+\ensuremath{\bm{\f}} \ensuremath{\star} \ensuremath{\bm{\g}} = Q_n^\ensuremath{\star} {\rm diag}(Q_n \ensuremath{\bm{\f}}) Q_n \ensuremath{\bm{\g}} = Q_n^\ensuremath{\star} {\rm diag}(Q_n \ensuremath{\bm{\g}}) Q_n \ensuremath{\bm{\f}} = \ensuremath{\bm{\g}} \ensuremath{\star} \ensuremath{\bm{\f}} \ccr
+(\ensuremath{\bm{\f}} \ensuremath{\star} \ensuremath{\bm{\g}}) \ensuremath{\star} \ensuremath{\bm{\h}} =  Q_n^\ensuremath{\star} {\rm diag}(Q_n Q_n^\ensuremath{\star} {\rm diag}(Q_n \ensuremath{\bm{\f}}) Q_n \ensuremath{\bm{\g}}) Q_n \ensuremath{\bm{\h}} \ccr
+= Q_n^\ensuremath{\star} {\rm diag}(Q_n \ensuremath{\bm{\f}}) {\rm diag}(Q_n \ensuremath{\bm{\g}}) Q_n \ensuremath{\bm{\h}}
+= Q_n^\ensuremath{\star} {\rm diag}(Q_n \ensuremath{\bm{\f}}) Q_n Q_n^\ensuremath{\star} {\rm diag}(Q_n \ensuremath{\bm{\g}}) Q_n \ensuremath{\bm{\h}}  \ccr
+= \ensuremath{\bm{\f}} \ensuremath{\star} (\ensuremath{\bm{\g}} \ensuremath{\star} \ensuremath{\bm{\h}}).
+}
+\textbf{END}
+
 \rule{\textwidth}{1pt}
 For 2\ensuremath{\pi}-periodic functions $a,f$ we have a continuous periodic convolution given by
 \[
@@ -193,6 +205,42 @@ Note the standard continuous convolution involves an integral over $\ensuremath{
 \]
 for $\ensuremath{\theta}_j = 2\ensuremath{\pi}j/n$. Express the Fourier coefficients of $a \ensuremath{\star}_n f$  in terms of $\hat{a}_k$ and $\hat{f}_k$ and thereby prove uniform convergence as $n \ensuremath{\rightarrow} \ensuremath{\infty}$ provided both $a$ and $f$ have absolutely summable Fourier coefficients. Hint: Integrals and infinite sums can be swapped due to uniform and absolute convergence.
 
+\textbf{SOLUTION}
+
+Note that
+\[
+\ensuremath{\sum}_{k,j=0}^\ensuremath{\infty} |\hat{a}_k| |\hat{f}_j| =  \ensuremath{\sum}_{k=0}^\ensuremath{\infty} |\hat{f}_k| \ensuremath{\sum}_{j=0}^\ensuremath{\infty} |\hat{a}_j| = \|\hat{\a}\|_1 \| \hat{\f}\|_1
+\]
+which allows us to interchange infinite sums. The true convolution satisfies (using uniform convergence to swap integrals and sums):
+\[
+(a \ensuremath{\star} f)(\ensuremath{\theta}) = \ensuremath{\sum}_{k=0}^\ensuremath{\infty}  \hat{f}_k {1 \over 2\ensuremath{\pi}} \ensuremath{\int}_0^{2\ensuremath{\pi}} a(\ensuremath{\theta}-\ensuremath{\varphi}) \E^{\I k \ensuremath{\varphi}} \D \ensuremath{\varphi} =  \ensuremath{\sum}_{j=0}^\ensuremath{\infty} \hat{a}_j \E^{\I j \ensuremath{\theta}}   \ensuremath{\sum}_{k=0}^\ensuremath{\infty} \hat{f}_k \underbrace{{1 \over 2\ensuremath{\pi}} \ensuremath{\int}_0^{2\ensuremath{\pi}} \E^{-\I j \ensuremath{\varphi}} \E^{\I k \ensuremath{\varphi}} \D \ensuremath{\varphi}}_{=\ensuremath{\delta}_{kj}}  = \ensuremath{\sum}_{k=0}^\ensuremath{\infty} \hat{f}_k \hat{a}_k \E^{\I k \ensuremath{\theta}}.
+\]
+Note that this has absolutely summable Fourier coefficients  since:
+\[
+\ensuremath{\sum}_{k=0}^\ensuremath{\infty} |\hat{f}_k \hat{a}_k| \ensuremath{\leq} \ensuremath{\sum}_{k=0}^\ensuremath{\infty} |\hat{f}_k| \ensuremath{\sum}_{j=0}^\ensuremath{\infty} |\hat{a}_j| = \|\hat{\a}\|_1 \| \hat{\f}\|_1.
+\]
+We can similarly write
+\meeq{
+(a \ensuremath{\star}_n f)(\ensuremath{\theta})  = {1 \over n} \ensuremath{\sum}_{j=0}^{n-1} \ensuremath{\sum}_{k=0}^\ensuremath{\infty} \hat{a}_k \E^{\I k (\ensuremath{\theta}-\ensuremath{\theta}_j)} f(\ensuremath{\theta}_j)
+=  \ensuremath{\sum}_{k=0}^\ensuremath{\infty} \E^{\I k \ensuremath{\theta}} \hat{a}_k \underbrace{{1 \over n} \ensuremath{\sum}_{j=0}^{n-1}  \E^{-\I k \ensuremath{\theta}_j} f(\ensuremath{\theta}_j)}_{\hat{f}_k^n}.
+}
+That is, its Fourier coefficients are given by, for $c := a \ensuremath{\star}_n f$,
+\[
+\hat{c}_k = \hat{a}_k \hat{f}_k^n = \hat{a}_k \ensuremath{\sum}_{p=0}^\ensuremath{\infty} \hat{f}_{{\rm mod}(k,n)+pn}
+\]
+We thus deduce
+\begin{align*}
+|a \ensuremath{\star}_n f - a \ensuremath{\star} f| &\ensuremath{\leq} \ensuremath{\sum}_{k=0}^\ensuremath{\infty} |\hat{c}_k - \hat{a}_k \hat{f}_k| \ccr
+= \ensuremath{\sum}_{k=0}^{n-1} \br[|\hat{a}_k| (|\hat{f}_{k+n}| + \hat{f}_{k+2n}| + \ensuremath{\ldots}) +
+ (|\hat{a}_{k+n}| + |\hat{a}_{k+2n}| + \ensuremath{\ldots}) (|\hat{f}_k| + |\hat{f}_{k+n}| + \ensuremath{\ldots})]\\
+ & \ensuremath{\leq}
+ \| \hat{\a} \|_1 \ensuremath{\sum}_{k=0}^{n-1}  \ensuremath{\sum}_{p=1}^\ensuremath{\infty} |\hat{f}_{k+pn}| + \|\hat{\f}\|_1 \ensuremath{\sum}_{k=0}^{n-1}  \ensuremath{\sum}_{p=1}^\ensuremath{\infty} |\hat{a}_{k+pn}| \ccr
+ = \| \hat{\a} \|_1 \ensuremath{\sum}_{j=n}^\ensuremath{\infty} |\hat{f}_j| + \|\hat{\f}\|_1 \ensuremath{\sum}_{j=n}^\ensuremath{\infty} |\hat{a}_j|.
+\end{align*}
+Both sums go to zero as $n \ensuremath{\rightarrow} \ensuremath{\infty}$ since they are absolutely summable.
+
+\textbf{END}
+
 \rule{\textwidth}{1pt}
 Convolutional Neural Networks (CNNs) are typically defined in terms of \emph{cross-correlation} instead of convolution: given two real vectors $\ensuremath{\bm{\a}} = [a_0,\ensuremath{\ldots},a_{n-1}]^\ensuremath{\top}$ and $\ensuremath{\bm{\f}} = [f_0,\ensuremath{\ldots},f_{n-1}]^\ensuremath{\top}$, the \emph{cross-correlation} is defined by $\ensuremath{\bm{\a}} \ensuremath{\otimes} \ensuremath{\bm{\f}} = [c_0,\ensuremath{\ldots},c_{n-1}]^\ensuremath{\top}$ where
 \[
@@ -205,6 +253,23 @@ Cross-correlations can be interpreted as a heuristic means to identify when two 
 \[
 \ensuremath{\bm{\a}} \ensuremath{\otimes} \ensuremath{\bm{\f}}  = \ensuremath{\bm{\b}} \ensuremath{\star} \ensuremath{\bm{\f}}?
 \]
+\textbf{SOLUTION} Here we find (using 0-based indexing):
+\[
+\ensuremath{\bm{\e}}_k S(\ensuremath{\bm{\a}} \ensuremath{\otimes} \ensuremath{\bm{\f}} ) = \ensuremath{\bm{\e}}_{{\rm mod}(k-1,n)} (\ensuremath{\bm{\a}} \ensuremath{\otimes} \ensuremath{\bm{\f}} ) = \ensuremath{\sum}_{j=0}^{n-1} a_j f_{{\rm mod}(j+k-1,n)} = \ensuremath{\bm{\a}} \ensuremath{\otimes} S \ensuremath{\bm{\f}}.
+\]
+Thus it must be equivalent to a convolution, i.e., a Circulant matrix. We can test on $\ensuremath{\bm{\e}}_0$ to figure out what the first column is:
+\[
+\ensuremath{\bm{\a}} \ensuremath{\otimes} \ensuremath{\bm{\e}}_0 = \underbrace{\Vectt[
+a_0,
+a_{n-1},
+\ensuremath{\vdots},
+a_1
+]}_{=: \ensuremath{\bm{\b}}}.
+\]
+Note that $C[\ensuremath{\bm{\b}}] = C[\ensuremath{\bm{\a}}]^\ensuremath{\top}$.
+
+\textbf{END}
+
 \rule{\textwidth}{1pt}
 We now move on to Chebyshev polynomials, which are a canonical example of orthogonal polynomials and allow us to use the approximation power of Fourier series for non-periodic functions. In the notes we investigated the standard Chebyshev polynomials $T_n(x) = \cos n \acos x$. Here we investigate a second kind of Chebyshev polynomials:
 \[
@@ -223,6 +288,35 @@ x U_n(x) &= {U_{n-1}(x)+U_{n+1}(x) \over 2}, \qquad n > 0.
 \end{align*}
 Use this to deduce $U_5(x)$.
 
+\textbf{SOLUTION}
+
+Note that we can write $x = \cos \ensuremath{\theta}$ where $0 \ensuremath{\leq} \ensuremath{\theta} \ensuremath{\leq} \ensuremath{\pi}$ so that
+\[
+\sqrt{1-x^2} = \sqrt{1-\cos^2 \ensuremath{\theta}} = \sin \ensuremath{\theta}.
+\]
+Thus
+\[
+U_0(\cos \ensuremath{\theta}) = {\sin \ensuremath{\theta} \over \sin \ensuremath{\theta}} = 1
+\]
+hence $U_0(x) = 1$. For the second property we find
+\[
+x U_0(x) = {\cos \ensuremath{\theta} \sin \ensuremath{\theta} \over \sin \ensuremath{\theta}} = {\sin 2 \ensuremath{\theta} \over 2 \sin \ensuremath{\theta}} = {U_1(x) \over 2}.
+\]
+Similarly, from trigonometric identities (or rewriting as complex exponentials)we find
+\[
+x U_n(x) = {\cos \ensuremath{\theta}\sin(n+1)\ensuremath{\theta} \over \sin \ensuremath{\theta}} = {\sin n \ensuremath{\theta} + \sin (n+1) \ensuremath{\theta} \over 2 \sin \ensuremath{\theta}} = {U_{n-1}(x) + U_{n+1}(x) \over 2}.
+\]
+We can now build these up using the recurrence:
+\meeq{
+U_0(x) = 1 \ccr
+U_1(x) = 2xU_0(x) = 2x \ccr
+U_2(x) = 2xU_1(x)-U_0(x) = 4x^2-1 \ccr
+U_3(x) = 2xU_2(x)-U_1(x) = 8x^3 - 4x \ccr
+U_4(x) = 2xU_3(x) - U_2(x) = 16x^4-12x^2 + 1 \ccr
+U_5(x) = 2xU_4(x)-U_3(x) = 32x^5 - 32x^3 + 6x
+}
+\textbf{END}
+
 \rule{\textwidth}{1pt}
 We can now show that this family of polynomials are orthogonal with respect to a specific weight, which is often called the \emph{semicircle weight}:
 
@@ -231,6 +325,17 @@ We can now show that this family of polynomials are orthogonal with respect to a
 \[
 \ensuremath{\int}_{-1}^1 f(x) g(x) \sqrt{1-x^2} \D x.
 \]
+\textbf{SOLUTION}
+
+This follows from a change-of-variables:
+\begin{align*}
+\int_{-1}^1 U_n(x)U_m(x)\sqrt{1-x^2}{\rm d}x &= \int_0^{\ensuremath{\pi}}U_n(\cos \ensuremath{\theta})U_m(\cos \ensuremath{\theta})\sin^2 \ensuremath{\theta}{\rm d} \ensuremath{\theta} \\
+&= \int_0^{\ensuremath{\pi}}\sin(n+1) \ensuremath{\theta}\sin(m+1) \ensuremath{\theta}{\rm d} \ensuremath{\theta}=\frac{\ensuremath{\pi}}{2}\ensuremath{\delta}_{mn}
+\end{align*}
+where the last step can be shown by substituting $\sin k\ensuremath{\theta} = (\exp(\I k\ensuremath{\theta})-\exp(-\I k\ensuremath{\theta})/(2\I)$.
+
+\textbf{END}
+
 \rule{\textwidth}{1pt}
 Similar to the way that the derivative of a cosine is expressible as a sine, we can relate the derivative of $T_n$ to $U_n$, though where the degree decreases.  Here we prove this result (which is an example of a property satisfied by all families of \emph{classical orthogonal polynomials}):
 
@@ -239,6 +344,20 @@ Similar to the way that the derivative of a cosine is expressible as a sine, we 
 \[
 T_n'(x) = n U_{n-1}(x).
 \]
+\textbf{SOLUTION}
+
+Note That
+\[
+{\D \over \D x} =  {\D \ensuremath{\theta} \over \D x}  {\D \over \D \ensuremath{\theta}}
+= -{1 \over \sqrt{1-x^2}} {\D \over \D \ensuremath{\theta}} = -{1 \over \sin \ensuremath{\theta}} {\D \over \D \ensuremath{\theta}}.
+\]
+Thus it follows immediately:
+\[
+T_n'(x) = -{1 \over \sin \ensuremath{\theta}} {\D \over \D \ensuremath{\theta}} \cos n \ensuremath{\theta} =
+{n \sin n \ensuremath{\theta} \over \sin \ensuremath{\theta}} {\D \over \D \ensuremath{\theta}} = n U_{n-1}(x).
+\]
+\textbf{END}
+
 \rule{\textwidth}{1pt}
 This connection can be used to differentiate functions, and as seen in the lab it can achieve much higher accuracy than divided difference techniques, even close to machine precision accuracy for nice enough functions.
 
